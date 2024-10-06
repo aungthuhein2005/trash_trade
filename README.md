@@ -20,7 +20,7 @@ The model is trained on the [TrashNet dataset](https://github.com/GoogleCloudPla
 1. Clone the repository:
    ```bash
    git clone https://github.com/yourusername/trash-detection.git
-   cd trash-detection
+   cd trash_trade
 2. Install the required packages:
   pip install -r requirements.txt
 
