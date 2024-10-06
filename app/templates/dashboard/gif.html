@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gif</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <!-- Flowbite Icon Script -->
+    <script src="https://unpkg.com/@iconscout/unicons@4.0.0/dist/line/unicons.js"></script>
+    <!-- Simple DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    
+    {% include 'dashboard/sidebar.html' %}
+
+    <div class="p-4 sm:ml-64">
+        {% include 'alert.html' %}
+        <div class="p-4">
+            <div class="pb-2 flex items-center justify-between">
+                <h1 class="text-gray-500 font-semibold text-lg">Gifs</h1>
+                <div>
+                    <a href="/admin/items/create" class="bg-blue-600 text-white px-2 py-1 rounded-md">Add Gifs <i class='bx bxs-gift'></i></a>
+                </div>
+            </div><hr>
+            <table id="pagination-table" class="min-w-full">
+                <thead>
+                    <tr>
+                        <th>
+                            <span class="flex items-center">#</span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">Title</span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">Image</span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">Description</span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">Point</span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">Quantity</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for gif in gifs %}
+                    <tr>
+                        <td>{{ gif[0] }}</td>
+                        
+                        <td>{{ gif[1] }}</td>
+                        <td>
+                           <img src="{{ url_for('static', filename='uploaded_items/' + gif[3]) }}" width="30px" height="30px" class="object-contain">
+                        </td>
+                        <td>{{ gif[2] }}</td>
+                        <td><span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded ">{{ gif[4] }}</span></td>
+                        <td>{{ gif[5] }}</td>
+                        <td>
+                            <a href="/admin/edit_gif/{{gif[0]}}" class="bg-blue-600 text-white px-1 rounded"><i class='bx bx-edit' ></i></a>
+                            
+                            <form action="{{ url_for('delete_gif', gif_id=gif[0]) }}" method="post" style="display:inline;">
+                                <button type="submit" class="bg-red-600 text-white px-1 rounded" onclick="return confirm('Are you sure you want to delete this gif?');">
+                                    <i class='bx bxs-trash-alt'></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <!-- Simple DataTables JS -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/umd/simple-datatables.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (document.getElementById("pagination-table")) {
+                const dataTable = new simpleDatatables.DataTable("#pagination-table", {
+                    paging: true,
+                    perPage: 5,
+                    perPageSelect: [5, 10, 15, 20, 25],
+                    sortable: false
+                });
+            }
+        });
+    </script>
+</body>
+</html>

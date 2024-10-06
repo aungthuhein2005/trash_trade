@@ -1,0 +1,44 @@
+<nav class="bg-gray-800 text-white">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="text-xl font-bold">
+            <a href="/" class="hover:text-gray-300">Trash Trade</a>
+        </div>
+        <div class="hidden md:flex space-x-5 items-center">
+            <a href="/" class="hover:text-gray-300">Home</a>
+            <a href="/gif" class="hover:text-gray-300">GIF</a>
+            <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="hover:text-gray-300 bg-blue-700 px-2 py-1 rounded ">Trade</button>
+            <a href="/profile">
+                {% if session.get('user_id') is none %}
+                    <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                        <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                {% else %}
+                    <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-500 rounded-full ">
+                        <span class="font-medium text-white dark:text-gray-300">{{session.get('user_name')[0].capitalize()}}</span>
+                    </div>
+                {% endif %}
+            </a>
+            
+        </div>
+        <div class="md:hidden">
+            <button id="menu-button" class="text-gray-300 focus:outline-none" data-collapse-toggle="mobile-menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden">
+        <a href="/" class="block px-4 py-2 hover:bg-gray-700">Home</a>
+        <a href="/gif" class="block px-4 py-2 hover:bg-gray-700">GIF</a>
+        <a href="#" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="block px-4 py-2 bg-blue-600 text-white">Trade</a>
+       
+            {% if session.get('user_id') is none %}
+            <a href="/profile" class="block px-4 py-2 bg-red-500">Login</a>
+            {% else %}
+            <a href="/profile" class="block px-4 py-2 bg-gray-500">{{session.get('user_name').capitalize()}}</a>
+            {% endif %}
+    </div>
+</nav>

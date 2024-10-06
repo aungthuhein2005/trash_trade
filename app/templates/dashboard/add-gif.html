@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@1.5.1/dist/flowbite.min.css" rel="stylesheet" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  {% include 'dashboard/sidebar.html' %}
+  <div class="w-1/2 mx-auto  mt-8"> {% include 'alert.html' %}
+    <div class="text-right mb-2">
+      <a href="/admin/gifs" class="underline text-blue-500">Go back</a>
+    </div>
+    <form action="/admin/items/create" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto" enctype="multipart/form-data">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="item_name">
+              Name
+            </label>
+            <input name="item_name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="item_name" type="text" required placeholder="Name">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="item_image" >
+              Image
+            </label>
+            <input name="item_image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="item_image" type="file" required placeholder="Image">
+          </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="item_value">
+              Value
+            </label>
+            <input name="item_value" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="item_value" type="number" required placeholder="Value or point">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="item_qty">
+              Quantity
+            </label>
+            <input name="item_qty" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="item_qty" type="number" required placeholder="Quantity">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="item_description">
+              Description
+            </label>
+            <textarea name="item_description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="item_description" required placeholder="Description"></textarea>
+          </div>
+        <div class="flex items-center justify-end">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Create
+          </button>
+        </div>
+      </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@1.5.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>

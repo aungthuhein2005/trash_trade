@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Admin Dashboard</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <!-- Flowbite Icon Script -->
+    <script src="https://unpkg.com/@iconscout/unicons@4.0.0/dist/line/unicons.js"></script>
+    <!-- Simple DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
+    <!-- ApexCharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    {% include 'dashboard/sidebar.html' %}
+
+    <div class="p-4 sm:ml-64">
+        <div class="p-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Users Card -->
+                <div class="bg-white shadow-lg rounded-lg p-4 flex items-center">
+                    <div class="p-3 rounded-full bg-blue-100  text-blue-500 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 2a6 6 0 00-6 6v4a6 6 0 0012 0V8a6 6 0 00-6-6z" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900 ">Total Users</h3>
+                        <p class="text-2xl font-semibold text-gray-700 ">{{total_users}}</p>
+                    </div>
+                </div>
+
+                <!-- Orders Card -->
+                <div class="bg-white shadow-lg rounded-lg p-4 flex items-center">
+                    <div class="p-3 rounded-full bg-yellow-100 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18m-6 5h6" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900 ">Total Orders</h3>
+                        <p class="text-2xl font-semibold text-gray-700 ">{{total_orders}}</p>
+                    </div>
+                </div>
+
+                <!-- Products Card -->
+                <div class="bg-white shadow-lg rounded-lg p-4 flex items-center">
+                    <div class="p-3 rounded-full bg-green-100 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v2a1 1 0 001 1h4a1 1 0 001-1v-2m-1-8V5a1 1 0 00-1-1H9a1 1 0 00-1 1v4m0 0H5a1 1 0 00-1 1v4a1 1 0 001 1h4m0-8h4m0 0v4" />
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900 ">Total Items</h3>
+                        <p class="text-2xl font-semibold text-gray-700 ">{{total_items}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row mt-4">
+                <div class="p-2 sm:w-1/2 w-full">
+                    <div class="w-full bg-white rounded-lg shadow p-4 md:p-6">
+                        <div class="flex justify-between">
+                            <div>
+                                <h5 class="leading-none text-3xl font-bold text-gray-900 pb-2">
+                                    {% set total = year_predictions | map(attribute=1) | sum %}
+                                    {{ total }}
+                                </h5>
+                                <p class="text-base font-normal text-gray-500">Trash Trade</p>
+                            </div>
+                        </div>
+                        <div id="area-chart"></div>
+                    </div>
+                </div>
+            
+                <div class="p-2 sm:w-1/2 w-full">
+                    <div class="w-full bg-white rounded-lg shadow p-4 md:p-6">
+                        <div class="flex justify-between items-center">
+                            <h5 class="leading-none text-3xl font-bold text-gray-900">
+                                {% set total = monthly_order | map(attribute=1) | sum %}
+                                {{ total }}
+                            </h5>
+                            <p class="text-base font-normal text-gray-500">Order for this month</p>
+                        </div>
+                        <div id="bar-chart"></div>
+                    </div>
+                </div>
+            </div>
+            
+
+            
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <script>
+        const options1 = {
+            chart: {
+                type: 'area',
+                height: 350,
+            },
+            series: [{
+                name: 'Predict',
+                data: [
+                {{year_predictions[0][1]}},
+                {{year_predictions[1][1]}},
+                {{year_predictions[2][1]}}, 
+                {{year_predictions[3][1]}}, 
+                {{year_predictions[4][1]}}, 
+                {{year_predictions[5][1]}}, 
+                {{year_predictions[6][1]}}, 
+                {{year_predictions[7][1]}}, 
+                {{year_predictions[8][1]}}, 
+                {{year_predictions[9][1]}}, 
+                {{year_predictions[10][1]}}, 
+                {{year_predictions[11][1]}}, 
+                ]
+            }],
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            }
+        };
+
+        const options2 = {
+            chart: {
+                type: 'bar',
+                height: 350,
+            },
+            series: [{
+                name: 'Orders',
+                data: [
+                {{monthly_order[0][1]}},
+                {{monthly_order[1][1]}},
+                {{monthly_order[2][1]}},
+                {{monthly_order[3][1]}},
+               ]
+            }],
+            xaxis: {
+                categories: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+            }
+        };
+
+        const chart1 = new ApexCharts(document.querySelector("#area-chart"), options1);
+        const chart2 = new ApexCharts(document.querySelector("#bar-chart"), options2);
+        chart1.render();
+        chart2.render();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - AI Image Predictor</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <!-- Boxicons CSS -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.0.9/css/boxicons.min.css'>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    {% include 'navbar.html' %}
+    {% include 'upload_modal.html' %}
+
+    <!-- Hero Section -->
+    <section class="bg-gray-100 py-20 text-center relative" style="background-image: url(https://www.itoen-global.com/asset/image/sustainability/sec01_pic01.svg); background-position: center; background-size: contain;">
+        <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Backdrop -->
+        <div class="relative z-10"> <!-- Content Layer -->
+            <h1 class="text-4xl font-bold mb-4 text-white">Trash-Free Tomorrow</h1>
+            <p class="text-lg text-gray-200 my-8">Upload an image, get a prediction, and earn points for a clean world.</p>
+            <a href="#" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="px-4 py-2 bg-white  text-lg rounded-lg ">
+                Just Trade <i class='bx bxs-chevrons-right'></i>
+            </a>
+        </div>
+    </section>
+    
+    <section class=" px-10 py-10 sm:px-20 md:py-20 md:px-40 text-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div>
+            <i class='bx bx-upload text-5xl text-blue-600'></i>
+            <h3 class="mt-4 text-lg font-semibold">Upload Image</h3>
+            <p class="text-gray-600">Upload images of trash to help us identify and predict types of waste.</p>
+        </div>
+        <div>
+            <i class='bx bx-transfer text-5xl text-blue-600'></i> <!-- Changed icon for better representation -->
+            <h3 class="mt-4 text-lg font-semibold">Exchange Gif</h3>
+            <p class="text-gray-600">Trade your uploaded images for animated gifs that promote eco-friendliness.</p>
+        </div>
+        <div>
+            <i class='bx bx-gift text-5xl text-blue-600'></i> <!-- Changed icon for better representation -->
+            <h3 class="mt-4 text-lg font-semibold">Get Gif</h3> <!-- Updated title -->
+            <p class="text-gray-600">Withdraw and receive gifs as rewards for your contributions to waste reduction.</p> <!-- Updated description -->
+        </div> 
+    </section>
+    
+    
+    <section class="flex flex-col md:flex-row py-20 px-4 md:px-40 bg-gray-100">
+        <div class="w-full md:w-1/2 p-4"> 
+            <h3 class="text-xl font-semibold">Our Aim & Objectives</h3>
+            <p class="text-lg text-gray-700 leading-relaxed text-justify">
+                At our organization, we are committed to fostering a cleaner, healthier planet for future generations. Our primary aim is to promote sustainable waste management practices that minimize environmental impact and encourage community participation.
+                <br><br>
+                We focus on educating individuals about the importance of reducing waste, recycling, and properly disposing of trash. Our objectives include organizing community clean-up events, offering resources for recycling, and developing educational programs that highlight the significance of maintaining a clean environment.
+                <br><br>
+                By leveraging technology, we aim to create a platform that not only raises awareness but also rewards individuals for their efforts in maintaining cleanliness in their surroundings. Together, we can make a significant impact and move towards a waste-free future.
+            </p>
+        </div>
+        <div class="w-full md:w-1/2 p-4 flex items-center justify-center md:justify-end"> <!-- Center the image -->
+            <img src="../static/image/image1.png" alt="Community Clean-up Initiative" class="max-w-full h-auto"> <!-- Responsive image -->
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-lg font-semibold">Connect with Us</h3>
+                    <ul class="flex space-x-6 mt-2">
+                        <li>
+                            <a href="#" class="hover:text-blue-400 transition duration-200">Facebook</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-blue-400 transition duration-200">Twitter</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-blue-400 transition duration-200">Instagram</a>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-blue-400 transition duration-200">LinkedIn</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-6 text-center border-t border-gray-700 pt-4">
+                <p class="text-sm">&copy; 2024 Your Organization. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    
+   
+    <!-- Flowbite JS (For additional components if needed) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+</body>
+</html>

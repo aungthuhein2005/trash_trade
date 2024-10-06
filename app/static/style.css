@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+    margin: 20px 0;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 0 auto;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+}

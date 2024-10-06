@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@1.5.1/dist/flowbite.min.css" rel="stylesheet" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  {% include 'navbar.html' %} {% include 'upload_modal.html' %} {% include 'alert.html' %}
+  <div class="mx-auto px-4 py-4 block sm:grid grid-cols-4 gap-4">
+    <div class="col-span-1">
+      <div class="py-2 mr-4 border">
+        <div class="flex justify-center items-center">
+          <div class="relative inline-flex items-center justify-center h-20 w-20 overflow-hidden bg-gray-500 rounded-full">
+              <span class="text-xl font-bold text-white dark:text-gray-300">{{user[0][0].capitalize()}}</span>
+          </div>
+        </div>
+        <h3 class="text-center my-2 font-bold text-gray-600">{{user[0]}}</h3>
+        <div class="px-4">
+          <div class="text-center">
+            <span class="mr-4 font-bold">Point : </span><span>{{user[1]}}</span>
+          </div>
+          <ul class="mt-2">
+            <!-- <li class="border-b p-1 py-2"><label class="inline-flex items-center cursor-pointer">
+                <input type="checkbox" value="" class="sr-only peer">
+                <div
+                  class="relative w-8 h-4 mr-2 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[3px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                </div>
+                <span class="ms-3 ps-3 text-sm font-medium text-gray-900 dark:text-gray-300">Dark mode</span>
+              </label></li> -->
+            <li class="border-b p-1 py-2"><a href="/edit-profile" class="flex items-center"><i
+                  class='bx bx-edit-alt text-xl mr-2'></i>Edit Profile</a></li>
+                 {% if user[2] != 0 %}
+                 <li class="border-b p-1 py-2"><a href="/admin/dashboard" class="flex items-center"><i
+                  class='bx bxs-dashboard text-xl mr-2'></i>Dashboard</a></li>
+                 {% endif %}
+            <li class="border-b p-1 py-2"><a href="/logout" class="text-red-600 flex items-center"><i
+                  class='bx bx-log-in text-xl mr-2'></i>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-3">
+      <h2 class="text-xl mb-2 mt-4 sm:mt-0">Exchanged Items</h2>
+      <hr />
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        {% for item in exchanged_items %}
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+          {% if item[2] != 'done' %}
+          <span class="p-1 text-sm absolute 
+        {% if item[2] == 'pending' %} bg-yellow-200 text-yellow-800 
+        {% elif item[2] == 'deliver' %} bg-blue-200 text-blue-800 
+        {% elif item[2] == 'failed' %} bg-red-200 text-red-800 
+        {% else %} bg-gray-200 text-gray-800 
+        {% endif %}
+    ">
+            {{ item[2] }}
+          </span>
+          {% endif %}
+
+          <img class="mx-auto" width="100px p-2"
+            src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTExIVFRUXGRoYGBgXFRcYFxcYGBgXGBoYFRcYHSggGholHRcVITEhJSkrLi4uFyAzODMtNygtLisBCgoKDg0OGhAQGi0lICYtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAACAwEBAQAAAAAAAAAAAAAABQMEBgIHAf/EADsQAAEDAgMFBQYFAwQDAAAAAAEAAhEDIQQFMRJBUWFxBoGRofATIjKxwdEjQlLh8QdichQzktMVU4L/xAAaAQACAwEBAAAAAAAAAAAAAAAAAwIEBQEG/8QAKREAAgIBBAEDAwUBAAAAAAAAAAECAxEEEiExQRMiUVJhkQUjMnGBQv/aAAwDAQACEQMRAD8A9xQhCABCEIAEIQgAQgpbi83YyRvUJ2RgsyeCUYSk8JDJCz1PPuiZYHNGVBwPBKr1Vc3hMZOicVlovoSvF5yxtm+8fL90oxOaOfq6BwFguWauuH3Ow085GlrYljficB3qnVzukOJ6D7rMVaoneoy6fJU566f/ACixHSx8mlHaBn6T3wp6WcUzrI81kwd/r1oumug93ioLXW+Sb0sDasxTDo4eKmWLZViLq7Qxrho4j1wViGuT/khEtL8M06hxOJawSUuo5x+oTzH2WezvOQ952TZto+6ndrIRhmPZGvTSlLD6NMM4ZKtYfGNfYG681OOduPVXstzFzTMqnD9Rmn7lwWpaJY4PREJdk+P9o25umK1q5qcVJGdOLi8MEIQpkQQhCABCEIAEIQgAQhCABCEIAV59jvZsgalYPFYom5K1HbCZaORuvO83xJaCsTWScrcfBraSKVeSTFZiQYadfGeSd5a99IbdUySNJ06xvWc7P0QXCs/QTs9dJ+ad4rEB1pki/Xqk7VEdJ54GTq838fW5RmrOtkro14dx4qcVb8VxnEhht219aygcB6n+FTNTTw6Kbasb8vIqGTuCy13rzXQcFC07vXXyXwv04+v3RkMFwPAXYrqgalrT64rn225c3BtGYqTv7tFDiMIHCSBOk8lXoVVb9spZz2Rw10ZrEMLTsnu5hS4QlMcxwu11Fx1UOCZO66W4jVLg0PZaduN0LWJL2dweyC/jZOlu6KDjUsmRqpKVjwCEIVsrghCEACEIQAIQhAAhCEACEIQBRzjL/bU9n8wu08+HReV5zlDhUh7dnjz5L2JYTtzipqhoj3Bfqb/KFQ1lUcb/ACXNJZLO3wZxjQ1saDh60UThfv8AuFy6oVCytfRZzL6RZaLzOilDoM+X2XOF1ndv6cVZcIFtTbzsUtskgItyj63X0VLD1bmoqNYGRvuF0wevXRLbJInp1L3XckqEW9ckbcKOTuCWSvoZNz/C4e6Bz9fUhfW1AEZAtL4Kq52rQq21B+q62RwMtrRPuzuEpODiWAuB15dFmWPTzs7iIqAbnSCrelkvUW5Fe9PY8GrAX1CFvGSCEIQAIQhAAhCEACEIQAIQhAAhCEAC8qz2tt1qjp1c7wBgL1N5sV49jHS4niZVDXPiKLujXLZUxD7LjCGba+oXyuOimy9vq3gs1mgNMFSgGN3BY3tjnVVlRtCk4NJLWkktb7zjLRtvOywAQZJ36hbLCG53T5rI9r8kFR7nNgkwSDxiAR3D5Lun2ep7+iF27Y9vZU7J5y97Q55lpeackjaDtnaG0NYgn3j+khbKniNowNBHVZrsZ2ODH+0rC/5Wbrbz9l6Pg8I0aNAHIBPvpjOeYCqrZRj7hI6t9P3lRU8QCYPC88VqKlILh2Ca4XaCqz0z+RqvXwYbtXmTqbQGODXPMAuLWi1ydp5DQZi5WX7PZ7WhtZ75pvqGnBeC4ODWunZgFoh7b6a8FvO1nZEYinDHEFskAnjrBOnTTosVgOyJpvbtbMTe0OsRaN2nmrVcaoVOM+xM3ZKxOHRvaVWQuHkLtjIEKtVsVmF7BdpVExwVbZc1w3EJJRqpjQqaJkHhi5o9JaZEr6osKZY3/EfJSr0yeUYT7BCELpwEIQgAQhCABCEIAEIQgAQhCAOagkEcl5BjKZDiF7CvMu0mELK9QHjI6G49cln69cRZd0b5aM7WZKtUGCOYC+Fi6Y1ZjNEnc6Lu13kafyosub7WoeDL9509clxXcYF+PqFa7I0xNU82jyJ+qnTHMiFjxFjnDYeFn+2vbmngfwms9pXLZDdGNBmHPOp0Nh5LXU2TZeW/1Z7H4h1f/V0abqrHNAeGgucxzQROyPykAab+q0KoJy5KFknjgU1P6sY4n/bw4/8Ah/8A2L0P+nvbMZgHMcwU6zLloMtc022mzzsRutxXhdDK673im2jUL3WDdhwJ7iN3Fe0/0n7EV8GalfEQ19RoaKYIJa0HaJeRaZiw4J9tcNvHYqucs8m7dSSLPcMGuY8DU7B7wSD5EeHBagNSjtRRnDVCNWgPHVjg76FUrKswZarsxJCKP2/ZVK+qsUny2Z3KOoJ3LIRpENJpV6ibxwUVBl1ey/CF7w0DUhNim3hEJPHZv8sP4VP/ABHyVlc0mbIAG4AeC6XporCSMCTy8ghCFI4CEIQAIQhAAhCEACEIQAIQhAAk/aPJhXZLYD26cx+kpwqGZZtTog7Rk8B9Uu3Zse/onXu3Lb2eX1qRa4giCLEHUclzsA7lN2l7QCpU2thvA7NieE3uVTw2Ma8e66fmOo1WFKOHx0bMW8chiBZT9k6sVarD+YNcOcEgnzauXiQlz6jqVRlRtyPMHUFFUtsgnHdHBvvbBjS4zDRJgEmBrAFymFCsHNDmkEEAggyCDoQeCRZdmbKgDmnqDZw6hTswrLljn051DHQ2TvDHAtB5gCVoxaZQkmjjtPim0quCqucGgVy1xO5j6NUE/wCIOxJNhvWg9qI2pGzrMiI6pbgsvpscXgFzyIL3uc90bwC4nZb/AGiByXbMuw7TtChSBF5FNovxFtUzKF4J8HXdUe54tSgBlo2zcuqcdnQDjBOhBVTtLVDcO+T8Xujq4/aT3KTH5syk0ue6PMnoN6xWPzZ+LqCxbTafdb9TzhIvtjGL+R9NTck/BeoCwAg+vkuap3WXFJx3XCA8NMucJ6rHUTRyW8NSW4yHLPZt2nD3yPAfdZTIswY2rJbIHHnvC3mHxDXiWmVqfp9cG9zfPwZ+snLrHBKhCFrmcCEIQAIQhAAhCEACEIQAIQhAAhCT55mYYC0G+8jdyULLFXHcycIObwjjOc5DAWsN+P2Xn+cY8um9+quZhi5n6rNVqhJMzA0PGTELDuulbLLNamlQXBC+nPxJdUpt2paYI4GCmz2SJ9Cyo/EbAQN/E8uSjCQ+SRKw1otVjkQD8125zzALwT/iPorNNoIHCFLToAEEnouORHBQDarTMAniJb5yrdHN8W0WAI/u18v3Vxgm075/jz8V9Yy/kues4hsT7LmVdoqzjD6QEfpfM+IEKxXzys8H2bAzm73j3AQFTw9OAb3v4FWANOC49VM56EPgUV8HVe7aqPLidZ07ldwmCgRMK05cNdCQ7JS7G4RL/p/7j4/ZVHYBrXSN/wA1d9suKhkFdyyJWpNLXrQZZjiwiD65rPirxOlu9d08RGiFNxeUdlBSWGenYDGioOatrBZTmREELZ4DFio2d+9buk1atW19mPqNO63ldFpCEK6VgQhCABCEIAEIQgAQhfHuABJ0CAKmZY0UmzvOgWJzHFEgnXv85VvN8y9o88NByCQ5jUgR6KxNXe5ywujV01O1c9inE179+nRRGj6+h8lI+haTr1UmHYI9bt6pNl5C3Oq2y0MHxOt65wVFl4uAOEKHMZdWN7NHmVJgakSrCWIC3yxqGRZTN1UNN2189FZa607+GvoJbOH0E36C0LgHT16/ZDiemhPj6K529J68RqltE0W6B1lSg81Tp1LRw3+vV1PSKVIkSCdfJdtCia5TsCEDOarVG10aq0QqeLMBTIlGrWHtCdDY90wpTU4dEqxmILalMn4SSHHqDAj1ormHda4jeO/15KUocJkkxnha0W4rS5Njy06+vssdh/iTnAVo6rkJOEk0QsgpLDPSaFUOAIUiRZHir7JOvPenq9HRb6kFIw7YbJYBCEJwsEIQgAQhCABKe0mK2KUDV1u7emyyPa3GD2gb+keZv9lX1U9tbHUR3TQiqVOv28Pkk+MuQJ3zv05/ZMq1UkHju1E90pI2qPeBknn9FgyNmBM8+AUZdZSU2zYrurhxE35KCRPJmsOdqrWnUFvS4mV3RbD+qqvr7OLew2ljfGXK7VbBlW5cfgVF5GlJp6Hh+6l2pvoVzQNgfUqdjdoeilM6VXVD3ep7+S+sBPn/ACOanbTG1y3fyuariN2unNQZNBQo8/XH5Ky0WsoqbpBgWPH5KZv0SZMmfSOF1ZoOUIapxTiEIizpwsqeLdZXQqeL0KkiJns4YDTcf0jaHVvrzVrD1NprDxAJ8PklfaXFbNGp0jxsreUEmiy35R3SrG39tP7nN3vwM6AJ0H2sE2wgvcX16+oS72uzAbHM/ZWsNiTI+u9VpE+zR4KqQQtlhqu00O4rCYesFqshryC3vH1Wn+nW4lt+TO1kOMjZCELYM4EIQgAQhCAPhK8zzTFipVc8iZJgcF6Njj+G+P0u+RXlD3Xus7XyfCLujj2z5inOImbeXgkzql5PVMq9WbeXVVW0wTKzDTiSYR0Hrr3q6HSuMPhXkTE+F9YU3si3Ub0qWeyWUZntXlmy4YpmrQA8cb2cPFSUqwqUw4b0+zanNGoDvaY8FjsiqGdmNbqzBuUP6FdSHOX1o906bk1BMgC3Hp1SGu7ZPf6+SZYfEAgdxKhJeSZfOs/RVa1QNga38irjHT0iw3zxPBV3UbHre+7iO9KOoiou7hPeL+Su0nhV3YaJgjTjrpy1XDDJiBGqg1kmM6T1Y4Jfh2lXGlCISOnFLMyrhrSr1R9lku1WOhhAOtk2uO6WCDeFkymb4l1epsD8xgd5hb/CtDW7PCPJed5K2a7DwM+RW/ogxJ7+McjuVvVcJRQunluRI5kmfFXMMf8Al68lDQv8u7W3rirOGE3mB91RkyyM8Lu38ZKf5PivxG7rx4pDRaAmWXm7XD9X1TKHtkmV7VmLN0hCF6UxAQhCABCEIA+ObII4ryfMcOab3NOrSR5r1lZjtbkntPxWATHvbtN6p62pzhleC1pbFGWH5PPGUi9+y3f8uKatotgNGg1O93VfW0WsBDT728/Qcl3hmk6+Kx3waWcn1zuFuS5ZUvDryuHUyL7vFRMJSnJpk0kyt2hw9R1GoKd3QQBKxeVhzCQ4bLhrOhB4eK9BpunrzSrtNkm2zbZZwO0ee66sVWLG0hJPORQ6oHDn9F1g3wTF9Epo4otLmuBa4C4OvCRy3q7hKoOkTz6KcoYRKMsj7CYixjT0FMz9J5de9UsNpbu524q57MyJ4evqqkuxpYqAEjh6BhDqIkHhb5fdfABAtvUoFz63BLA7pdOSkcfso3VAPJQV8SOKnFEWcY7EbIPJef5/iNtxvY/RaLG4wvcWtkjlvVCn2e23bVTfu5cwFdpShyxFmXwjL5Q93tA5ujdeYNjHivQcuqh0An1ooMN2ZpttLgD+kAfdNMJkjBESSIF3fbcpXzjPo5UnDskDRutF1Zo+St0cHTFy0cNTof4UrcPT/wAbbj9CqTj9x+8jYr+C+JoHEfRQMwpHAg3594V/I6O1XYBuue70FKqLc0hdkltbNwhCF6YwwQhCABCEIAEl7V4z2dGBq63cnSynbip/tjdc/JI1MttTaHUR3WJCDA0Nr3hLR5n7Jk/YpsLnQG6klLK9cswpc0Q6JGhIBdcx0StuaOr4csefeY5r5Ftpl2zHEEiVmwrWEX5SbZp8GaNZssIMGDuIPMG4XGJyxrRbVZ/KMQaVUv3ezeXDiGiR52713gcbVdWY59Qw4naaT7obEm26F2VMZLoE5J9k76WyY38eanpwQQd+qk9pTqBxpvDi0weXioQfPTuVCUXB8lhS3Izee5I2oC0GHtux30PJZjCA6GQ4WIXo2Lo7QneFjs6w+xWLh+YAnr6Cs1y4wc+5Pl9aYHrqnzHAgSVlqDwCCn2Eq2n1cwk2Q8jEy68W71zUqgeS4eSICoY7EwlRjk62SYvE7IPAb0ixGOdVd7OmY0k8BxH2VTNMdeJsNVLkAlpcd5VuMNkcinLLwNcJQDBAvx59U5wFCfiH7dVBlmG2jOgHEJ7g8OSYA8/M8AlZbZ14RDUoaE29blL/AOOcSPeDAdNrU20ATrB4NreZ4/bgsTj8Waz3OJIMnZH/AK2NdM8tCeZKswo+oQ7c/wATVUsnaPzHgRaPArmplFyWmxGh1/2+tEjqZ3WqHaaS0bQDGDffQ8Vs2olTE5vkuxI3aZ8Wu6dIG9Pez2JaHGw97euMXhw9had/qyUYKpAASo5psTJPFsGj0BC4o/COgXa3zIBCEIAF8JQVFUKAOnVFm+17NprHcCR4/wAJpia0JBm+ILmkd/gk6iO6tobS9s0zM4zDl1IPFnMLmE8jBv8A23II4FcZfSp0RTrPcNlzXRTgl7toQWEaEA/m3wmGXYzZcQ4e67Unj9uKTZhRcHuLtZgcGgaNbwCz6pJxRoST3YLlDGMAeP8ATjYeC07LyajWnht27gdwXNSgw0nOp1DUfLQ5uyWuYyZJLTe9veS6nVgwrQeCRqCNHCzmnkVPIbfgc5ZlzhTqvLdnaADRG4CZI9aKJjpaCLpnkWZOqNfTqHaewTtabTTIkjjIhKsOfwx0Cp6tcpoZS3zk6ZosP2nrEYkiTAY3pNz9VtXVAAeAmVj6+TvxFV1SSNo25AWA8AmaSpzyRvsUBTTxN0zwmO2bbkxw3YR7vzK9T/p2/c9W3pG/IhatLwL3ZkOaSZhjhB3klait2ErN/OUnxnY6oNSSox0bTOvVpmVqvlaTslhy6kDukpfW7PuatN2KpbDXtduMjoR+y5qanGpsKbt08D+g0Nhjbm1r7+i7z3HmlFCkYdG09++8wBwJg9BCs4CnLwY4nS5tH1S/tNhXNqGoR7rg2+4ECIJ3cear6aKxuHWvMsChjngyHvB4hx+Wiu0ccIeyq0Oa8Q57GgVGzeTHxXS8tIuDPmp6M23KzkhhF6rRbh6Ta1OoKpJimQLNMSSR+rkleXuxNSs0guJnWT65p9lLWsbiC6n7QAUzsRbaO1e2muq4wtTEbX4IptJ3U6e1/wAnunxJAQcT7Ni/3Wku0Ak8gNUgwokj1qmGaVj7IUnQXvA2o0A/N46fwqWFEH5KrbH1LYwX+nYPZW5M2VCsIA4ABWGvSLCPKa0CttGYy1tIXxC6cO1G9ikQgBdiaCQ5jhStcWyq1bBgrh3J5zWowTKrPG00scbj4HHQj9LidL6HuW7xmRByR4jsxUGl+qoXaWSlvr/Bdq1Kxtn+TIU8FVLgxrDtyBBBtxJO4RvTRuV1RYsdPJpI8RbzTVuDxdIQySBoDDo6TeFFVfjjaHDowCPml+5LmL/A3em+JIrUqRotdtWqVAGwD8FMa7RG8yVw0wPkpsJlGIcTtMcdbnfPGU+wPZ06v8OCStPZfPlYSJSvhXHh5Zm2Ze6paPd+ae5fkobuWjoZa1u5Wm0AFrV1RrjtiZ07HN5Yuw2CAV6nQVgMXSYLIDhgVWr5W124JghAGZxfZth3LPY3IvZHab/K9GIVbEYNrtQoygpJpkoycXlHnGGrEbL2/ELFpOoPxA8DaeoCf4PHNePdcJI00PgVZx3ZcEk0zBOvPqlFXs7Xk+413espUX1PEVlGh61Vi5eGZ9uBNOzxDpuSPiO8g7wp6NAkwGk9ASnIybEjQOjhtGPmu25RiTqHHq6y7+79DJb6/qRFTwns2HarFjnOl7WAlxAENbLSCIvPFGELWHaY0zEAuM68vvKv0MgrcGtTCh2e/U6eQsF1Vaib62oW7ao+ciRrS50m5Os6pngsvOpTrD5WxugVxlABXaNPGpcd/JVtuc/6KWHwsK6ynCkAX1WBJzsoXSEACEIQAIQhAAhCEAclRlfUIOnxqmQhBwEIQgAQhCABCEIAEIQgAQhCAPiAvqEACEIQAIQhAAhCEACEIQB//9k="
+            alt="Sunset in the mountains" />
+          <div class="px-6 py-4">
+            <div class="font-bold text-md mb-2">{{item[0]}}</div>
+            <p class="text-gray-700 ">{{item[1]}}</p>
+            <p class="text-gray-700 font-semibold mt-2">Exchanged : {{item[4]}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@1.5.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>

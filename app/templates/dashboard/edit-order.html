@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@1.5.1/dist/flowbite.min.css" rel="stylesheet" />
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  {% include 'dashboard/sidebar.html' %}
+  <div class="w-1/2 mx-auto  mt-8"> {% include 'alert.html' %}
+    <div class="text-right mb-2">
+      <a href="/admin/orders" class="underline text-blue-500">Go back</a>
+    </div>
+    <form action="/admin/edit_order/{{order[0]}}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mx-auto">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="item_id">
+            Item Id
+          </label>
+          <input value="{{order[1]}}" name="item_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="item_id" type="text" placeholder="Username">
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="user">
+              User
+            </label>
+            <input value="{{order[2]}}" name="user" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="user" type="text" placeholder="Username">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+              Phone
+            </label>
+            <input value="{{order[4]}}" name="phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="phone" type="text" placeholder="Username">
+          </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="addresss">
+              Address
+            </label>
+            <input value="{{order[3]}}" name="address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="addresss" type="text" placeholder="Username">
+          </div>
+        <div class="flex items-center justify-end">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            Change
+          </button>
+        </div>
+      </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@1.5.1/dist/flowbite.min.js"></script>
+</body>
+
+</html>

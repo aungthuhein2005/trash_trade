@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <!-- Flowbite Icon Script -->
+    <script src="https://unpkg.com/@iconscout/unicons@4.0.0/dist/line/unicons.js"></script>
+    <!-- Simple DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    
+    {% include 'dashboard/sidebar.html' %}
+
+    <div class="p-4 sm:ml-64 " >
+        <div class="p-4">
+            {% include './alert.html' %}
+            <div class="pb-2 ">
+                <h1 class="text-gray-500 font-semibold text-lg">Orders</h1>
+            </div><hr>
+            <table id="pagination-table" class="min-w-full">
+                <thead>
+                    <tr>
+                        <th>
+                            <span class="flex items-center">#</span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">User</span>
+                        </th>
+                       
+                        <th>
+                            <span class="flex items-center">Item</span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">Status</span>
+                        </th>
+                         <th data-type="date" data-format="Month YYYY">
+                            <span class="flex items-center">Order Date</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order[0] }}</td>
+                        <td>{{ order[1] }}</td>
+                        <td>{{ order[2] }}</td>
+                        <td>
+                            <form action="{{ url_for('edit_order_status', order_id=order[0]) }}" method="post">
+                                <select name="status" onchange="this.form.submit()" class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-lg 
+                                    {% if order[3] == 'pending' %} bg-yellow-200 text-yellow-800  
+                                    {% elif order[3] == 'deliver' %} bg-blue-200 text-blue-800 
+                                    {% elif order[3] == 'failed' %} bg-red-200 text-red-800
+                                    {% elif order[3] == 'done' %} bg-green-200 text-green-800 
+                                    {% else %} bg-gray-100 text-gray-200 dark:bg-gray-700 
+                                    {% endif %}">
+                                    <option value="pending" {% if order[3] == 'pending' %} selected {% endif %}>Pending</option>
+                                    <option value="deliver" {% if order[3] == 'deliver' %} selected {% endif %}>Deliver</option>
+                                    <option value="failed" {% if order[3] == 'failed' %} selected {% endif %}>Failed</option>
+                                    <option value="done" {% if order[3] == 'done' %} selected {% endif %}>Done</option>
+                                </select>
+                            </form>
+                        </td>
+                        
+                        <td>{{ order[4] }}</td>
+                        <td>
+                            <a href="/admin/edit_order/{{order[0]}}" class="bg-blue-600 text-white px-1 rounded"><i class='bx bx-edit' ></i></a>
+                            <form action="{{ url_for('delete_order', order_id=order[0]) }}" method="post" style="display:inline;">
+                                <button type="submit" class="bg-red-600 text-white px-1 rounded" onclick="return confirm('Are you sure you want to delete this order?');">
+                                    <i class='bx bxs-trash-alt'></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <!-- Simple DataTables JS -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/umd/simple-datatables.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (document.getElementById("pagination-table")) {
+                const dataTable = new simpleDatatables.DataTable("#pagination-table", {
+                    paging: true,
+                    perPage: 5,
+                    perPageSelect: [5, 10, 15, 20, 25],
+                    sortable: false
+                });
+            }
+        });
+    </script>
+</body>
+</html>
